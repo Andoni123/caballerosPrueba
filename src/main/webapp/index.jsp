@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<a href="indexCaballero.jsp">Ve a caballeros</a>
 </body>
 </html>
