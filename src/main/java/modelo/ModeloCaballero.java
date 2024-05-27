@@ -32,27 +32,33 @@ public class ModeloCaballero {
 		return caballeros;
 	}
 	public ArrayList<Caballero> buscarCaballerosPorNombre(String nombre) {
-		ArrayList<Caballero> caballeros = new ArrayList<>();
-		
-		String sql="SELECT * FROM CABALLEROS WHERE NOMBRE LIKE ?";
+	    ArrayList<Caballero> caballeros = new ArrayList<>();
+	    
+	    String sql = "SELECT * FROM CABALLEROS WHERE NOMBRE LIKE ?";
+	    
+	    try {
+	        PreparedStatement pst = conector.getConexion().prepareStatement(sql);
+	        
+	        pst.setString(1, "%" + nombre + "%");
 
-		try {
-			PreparedStatement pst = conector.getConexion().prepareStatement(sql);
-			
-			ResultSet rs = pst.executeQuery();
-		    pst.setString(1, "nombre");
+	        ResultSet rs = pst.executeQuery();
 
-			while (rs.next()) {
-				Caballero caballero = new Caballero();
-				rellenarCaballero(caballero,rs);
-				
-				pst.executeQuery();
-				}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return caballeros;
+	        while (rs.next()) {
+	            Caballero caballero = new Caballero();
+	            rellenarCaballero(caballero, rs);
+	            caballeros.add(caballero);
+	        }
+	        
+	        pst.close();
+	        rs.close();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return caballeros;
 	}
+
 				
 
 	private void rellenarCaballero(Caballero c, ResultSet rs) throws SQLException {

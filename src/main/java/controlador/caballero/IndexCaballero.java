@@ -53,8 +53,16 @@ public class IndexCaballero extends HttpServlet{
 		 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 		 */
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			// TODO Auto-generated method stub
-			doGet(request, response);
+		    String nombre = request.getParameter("nombre");
+		    
+		    ArrayList<Caballero> caballeros = new ModeloCaballero().buscarCaballerosPorNombre(nombre);
+
+		    request.setAttribute("caballeros", caballeros);
+		    request.setAttribute("asig", request.getParameter("asig"));
+		    request.setAttribute("msg", request.getParameter("msg"));
+
+		    request.getRequestDispatcher("indexCaballero.jsp").forward(request, response);
 		}
+
 
 }
