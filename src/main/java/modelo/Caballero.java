@@ -7,7 +7,8 @@ public class Caballero {
 	private int fuerza;
 	private int experiencia;
 	private String foto;
-	private int arma_id;
+	private Arma arma;
+	private Escudo escudo; 
 	
 	public int getId() {
 		return id;
@@ -39,10 +40,17 @@ public class Caballero {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-	public int getArma_id() {
-		return arma_id;
+	public Arma getArma() {
+		return arma;
 	}
-	public void setArma_id(int arma_id) {
-		this.arma_id = arma_id;
+	public void setArma(Arma arma) {
+		this.arma = arma;
 	}
+	public Escudo getEscudo() {
+		return escudo;
+	}
+	public void setEscudo(Escudo escudo) {
+		this.escudo = escudo;
+	}
+
 }

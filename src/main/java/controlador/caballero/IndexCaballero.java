@@ -36,10 +36,16 @@ public class IndexCaballero extends HttpServlet{
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 			ArrayList<Caballero> caballeros= new ModeloCaballero().getTodos();
+			ArrayList<Arma> armas= new ModeloArma().getTodos();
+			ArrayList<Escudo> escudos= new ModeloEscudo().getTodos();
 
 			
 			request.setAttribute("asig", request.getParameter("asig"));
+			request.setAttribute("msg", request.getParameter("msg"));
 			request.setAttribute("caballeros", caballeros);
+			request.setAttribute("armas", armas);
+			request.setAttribute("escudos", escudos);
+
 			request.getRequestDispatcher("indexCaballero.jsp").forward(request, response);
 		}
 
