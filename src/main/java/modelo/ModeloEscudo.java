@@ -33,27 +33,26 @@ public class ModeloEscudo {
 	}
 
 	private void rellenarEscudos(Escudo es, ResultSet rs) throws SQLException {
-		es.setId(rs.getInt("id"));
-		es.setNombre(rs.getString("nombre"));
-		es.setCapacidad_defensa(rs.getInt("capacidad_defensa"));
+	    es.setId(rs.getInt("id"));
+	    es.setNombre(rs.getString("nombre"));
+	    es.setCapacidad_defensa(rs.getInt("capacidad_defensa"));
 	}
 
 	public Escudo getEscudo(int id) {
-		Escudo es = new Escudo();
+	    Escudo es = new Escudo();
 
-		try {
-			PreparedStatement pst = conector.getConexion().prepareStatement("SELECT * FROM ESCUDOS WHERE ID=?");
-			pst.setInt(1, id);
-			ResultSet rs = pst.executeQuery();
+	    try (PreparedStatement pst = conector.getConexion().prepareStatement("SELECT * FROM ESCUDOS WHERE ID=?")) {
+	        pst.setInt(1, id);
+	        try (ResultSet rs = pst.executeQuery()) {
+	            if (rs.next()) {
+	                rellenarEscudos(es, rs);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
 
-			rs.next();
-			rellenarEscudos(es, rs);
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return es;
+	    return es;
 	}
+
 }

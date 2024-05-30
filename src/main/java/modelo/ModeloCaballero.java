@@ -102,5 +102,41 @@ public class ModeloCaballero {
         }
         return false;
     }
+//	public boolean delete(String string) {
+//
+//		String sql="DELETE FROM CABALLEROS WHERE ID=?";
+//		try {
+//			PreparedStatement pst = conector.getConexion().prepareStatement(sql);
+//			pst.setInt(1, id);
+//			pst.execute();
+//			
+//			return true;
+//		} catch (SQLException e) {
+//			return false;
+//		}
+//		return false;
+//	}
+	public boolean update(Caballero c) {
+		String sql ="UPDATE CABALLEROS SET NOMBRE=?,FUERZA=?,EXPERIENCIA=?,FOTO=?,ARMA_ID=?,ESCUDO_ID=? WHERE ID=?";
+		
+		try {
+			PreparedStatement pst = conector.getConexion().prepareStatement(sql);
+			
+			pst.setString(1, c.getNombre());
+			pst.setInt(2, c.getFuerza());
+			pst.setInt(3, c.getExperiencia());
+			pst.setString(4, c.getFoto());
+			pst.setInt(5, c.getArma().getId());
+			pst.setInt(6, c.getEscudo().getId());
+			pst.setInt(6, c.getId());
+			
+			pst.execute();
+			
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+		
+	}
 	
 }

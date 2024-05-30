@@ -33,31 +33,33 @@ public class ModeloArma {
 	}
 
 	private void rellenarArma(Arma a, ResultSet rs) throws SQLException {
-		a.setId(rs.getInt("id"));
-		a.setNombre(rs.getString("nombre"));
-		a.setCapacidad_danio(rs.getInt("capacidad_danio"));
-		a.setFoto(rs.getString("foto"));
-	}
-	public Arma getArma(int id) {
-		Arma a = new Arma();
+        a.setId(rs.getInt("id"));
+        a.setNombre(rs.getString("nombre"));
+        a.setCapacidad_danio(rs.getInt("capacidad_danio"));
+        a.setFoto(rs.getString("foto"));
+    }
 
-		try {
-			PreparedStatement pst = conector.getConexion().prepareStatement("SELECT * FROM ARMAS WHERE ID=?");
-			pst.setInt(1,id);			
-			ResultSet rs = pst.executeQuery();
+    public Arma getArma(int id) {
+        Arma a = null; // Inicializar como null para manejar el caso en que no se encuentre el arma
 
-			
+        try {
+            PreparedStatement pst = conector.getConexion().prepareStatement("SELECT * FROM ARMAS WHERE ID=?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
 
-				rs.next();
-				rellenarArma(a, rs);
+            if (rs.next()) {
+                a = new Arma(); // Crear un nuevo objeto Arma solo si se encuentra un registro
+                rellenarArma(a, rs);
+            }
 
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // Cerrar ResultSet y PreparedStatement
+            rs.close();
+            pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-		return a;
-	}
+        return a;
+    }
 }
 
